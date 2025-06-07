@@ -1,8 +1,38 @@
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
 import styled from "styled-components";
 
 export default function Footer() {
+  const formRef = useRef();
+
+  function onSubmitForm(e) {
+    e.preventDefault();
+
+    try {
+      emailjs.sendForm(
+        import.meta.env.VITE_SERVICE_KEY,
+        import.meta.env.VITE_TEMPLATE_KEY,
+        formRef.current,
+        import.meta.env.VITE_PUBLIC_KEY
+      );
+      alert("성공적으로 문의가 접수되었습니다.");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <Wrapper>
+      <GuestBook ref={formRef} onSubmit={onSubmitForm}>
+        <MessageIpt
+          type="text"
+          name="message"
+          placeholder="방명록 남기기"
+          required
+        />
+        <SubmitBtn type="submit" value="남기기" />
+        <input type="hidden" name="from_name" value="직기초 외우기" />
+      </GuestBook>
       <div>&copy; 2025. 이서현 All rights reserved.</div>
       <div>
         여러분들의 성공적인 직업생활 50점을 기원하며 (GPT와 함께)
@@ -43,6 +73,34 @@ const Wrapper = styled.div`
   font-size: 0.9rem;
   font-weight: 300;
   color: #ccc;
+`;
+
+const GuestBook = styled.form`
+  display: flex;
+  gap: 1rem;
+`;
+
+const MessageIpt = styled.input`
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  outline: none;
+  border: 1px solid #ccc;
+`;
+
+const SubmitBtn = styled.input`
+  padding: 0.5rem 1rem;
+  background: #fff;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 1px solid #ccc;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #eee;
+  }
 `;
 
 const Sns = styled.div`
