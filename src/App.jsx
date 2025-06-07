@@ -287,6 +287,9 @@ const Option = styled.button`
     $correct ? "#0a5" : $incorrect ? "#a00" : "#333"};
   border-radius: 0.5rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 
   &:hover {
     background-color: #f2f2f2;
