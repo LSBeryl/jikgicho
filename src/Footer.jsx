@@ -4,6 +4,11 @@ export default function Footer() {
   return (
     <Wrapper>
       <div>&copy; 2025. 이서현 All rights reserved.</div>
+      <div>
+        여러분들의 성공적인 직업생활 50점을 기원하며 (GPT와 함께)
+        개발하였습니다.
+      </div>
+      <div>저도 50점이 나왔으면 좋겠네요.</div>
       <Sns>
         <div
           onClick={() => {
