@@ -27,7 +27,7 @@ export default function Footer() {
         <MessageIpt
           type="text"
           name="message"
-          placeholder="방명록 남기기"
+          placeholder="방명록 남기기 (개발자만 봄)"
           required
         />
         <SubmitBtn type="submit" value="남기기" />
