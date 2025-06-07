@@ -108,11 +108,16 @@ export default function App() {
 
       {quizStarted && quizList.length > 0 && (
         <QuizBox>
-          <QuestionLabel>
-            {quizList[currentIndex].isNameQuestion
-              ? "이 설명에 해당하는 능력은?"
-              : "이 능력의 설명은?"}
-          </QuestionLabel>
+          <QuizBoxHeader>
+            <QuestionLabel>
+              {quizList[currentIndex].isNameQuestion
+                ? "이 설명에 해당하는 능력은?"
+                : "이 능력의 설명은?"}
+            </QuestionLabel>
+            <QuestionCounter>
+              {currentIndex + 1} / {quizList.length}
+            </QuestionCounter>
+          </QuizBoxHeader>
           <QuestionText>{quizList[currentIndex].question}</QuestionText>
           <Options>
             {quizList[currentIndex].options.map((opt, i) => (
@@ -240,11 +245,24 @@ const QuizButton = styled.button`
 `;
 
 const QuizBox = styled.div`
+  position: relative;
   background-color: #f0f8ff;
   border: 1px solid #cce;
   border-radius: 0.75rem;
   padding: 1.5rem;
   margin-bottom: 2rem;
+`;
+
+const QuizBoxHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+`;
+
+const QuestionCounter = styled.div`
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #555;
 `;
 
 const QuestionLabel = styled.div`
