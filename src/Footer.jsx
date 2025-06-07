@@ -15,7 +15,7 @@ export default function Footer() {
         formRef.current,
         import.meta.env.VITE_PUBLIC_KEY
       );
-      alert("성공적으로 문의가 접수되었습니다.");
+      alert("방명록 써주셔서 감사합니다!!");
     } catch (error) {
       console.error(error);
     }
