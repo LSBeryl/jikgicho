@@ -12,24 +12,47 @@ export default function App() {
   const [showAnswer, setShowAnswer] = useState(false);
 
   const generateQuiz = () => {
-    const flatList = jikgicho.flatMap(([_, skills]) => skills);
     const generated = [];
 
     for (let i = 0; i < numQuestions; i++) {
-      const correct = flatList[Math.floor(Math.random() * flatList.length)];
-      const isNameQuestion = Math.random() < 0.5;
+      // 1. 랜덤으로 카테고리 하나 선택
+      const categoryIndex = Math.floor(Math.random() * jikgicho.length);
+      const [categoryName, skillsInCategory] = jikgicho[categoryIndex];
 
+      // 2. 그 카테고리 내에서 랜덤 정답 선택
+      const correct =
+        skillsInCategory[Math.floor(Math.random() * skillsInCategory.length)];
+      const isNameQuestion = Math.random() < 0.5;
       const question = isNameQuestion ? correct[1] : correct[0];
       const answer = isNameQuestion ? correct[0] : correct[1];
 
-      const otherOptions = flatList
+      // 3. 같은 카테고리 내 다른 선지 후보 추출 (정답 제외)
+      let otherOptions = skillsInCategory
         .filter((item) =>
           isNameQuestion ? item[0] !== answer : item[1] !== answer
         )
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 2)
         .map((item) => (isNameQuestion ? item[0] : item[1]));
 
+      // 4. 부족하면 다른 카테고리에서 선지 채우기
+      if (otherOptions.length < 2) {
+        const needed = 2 - otherOptions.length;
+        const otherCategories = jikgicho
+          .filter((_, idx) => idx !== categoryIndex)
+          .flatMap(([, skills]) =>
+            skills
+              .filter((item) =>
+                isNameQuestion ? item[0] !== answer : item[1] !== answer
+              )
+              .map((item) => (isNameQuestion ? item[0] : item[1]))
+          )
+          .sort(() => 0.5 - Math.random());
+
+        otherOptions = [...otherOptions, ...otherCategories.slice(0, needed)];
+      } else {
+        otherOptions = otherOptions.sort(() => 0.5 - Math.random()).slice(0, 2);
+      }
+
+      // 5. 답 포함해서 섞기
       const options = [...otherOptions, answer].sort(() => 0.5 - Math.random());
 
       generated.push({
