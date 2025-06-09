@@ -64,7 +64,8 @@ export default function Footer() {
 }
 
 const Wrapper = styled.div`
-  padding: 5rem 0 2rem 0;
+  padding: 5rem 3rem 2rem 3rem;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
