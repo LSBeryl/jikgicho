@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import styled from "styled-components";
 
 export default function Footer() {
   const formRef = useRef();
+  const [msg, setMsg] = useState("");
 
   function onSubmitForm(e) {
     e.preventDefault();
@@ -16,6 +17,7 @@ export default function Footer() {
         import.meta.env.VITE_PUBLIC_KEY
       );
       alert("방명록 써주셔서 감사합니다!!");
+      setMsg("");
     } catch (error) {
       console.error(error);
     }
@@ -28,6 +30,8 @@ export default function Footer() {
           type="text"
           name="message"
           placeholder="방명록 남기기 (개발자만 봄)"
+          value={msg}
+          onInput={(e) => setMsg(e.target.value)}
           required
         />
         <SubmitBtn type="submit" value="남기기" />
